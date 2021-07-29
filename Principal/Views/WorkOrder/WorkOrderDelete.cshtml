@@ -1,0 +1,22 @@
+﻿@model Principal.Models.WorkOrder
+
+@{
+    ViewBag.Title = "Eliminar Orden";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        <div>¿Seguro que deseas eliminar la orden de trabajo @Model.id del equipo @Model.Team.description?</div>
+    </div>
+
+    @using (Html.BeginForm("WorkOrderDelete", "WorkOrder", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.id)
+
+        <button type="submit">Eliminar</button>
+        <a href="@Url.Action("WorkOrderList", "WorkOrder")">Atrás</a>
+    }
+</div>

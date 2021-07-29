@@ -1,0 +1,39 @@
+﻿@model Principal.Models.WorkOrder
+
+@{
+    ViewBag.Title = "Nueva Orden";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @using (Html.BeginForm("NewWorkOrder", "WorkOrder", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label>Tipo</label>
+            @Html.TextBoxFor(model => model.type, htmlAttributes: new { @class = "", @type = "text" })
+            @Html.ValidationMessageFor(model => model.type, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Descripción</label>
+            @Html.TextAreaFor(model => model.description, htmlAttributes: new { @class = "" })
+            @Html.ValidationMessageFor(model => model.description, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Equipo</label>
+            @Html.DropDownList("team_id", null, "Selecciona", htmlAttributes: new { @class = "" })
+            @Html.ValidationMessageFor(model => model.team_id, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Estado</label>
+            @Html.CheckBox("state", false)
+        </div>
+
+        <button type="submit">Agregar</button>
+        <a href="@Url.Action("WorkOrderList", "WorkOrder")">Atrás</a>
+    }
+</div>

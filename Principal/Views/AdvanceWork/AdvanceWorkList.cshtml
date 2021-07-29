@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Principal.Models.AdvanceWorkOrder>
+
+@{
+    ViewBag.Title = "Avances";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>Avances</div>
+<a href="@Url.Action("NewAdvanceWork", "AdvanceWork")">Nuevo Avance de Trabajo</a>
+
+<div>
+    @if (TempData["success"] != null)
+    {
+        <span>@TempData["success"]</span>
+    }
+
+    @if (TempData["error"] != null)
+    {
+        <span>@TempData["error"]</span>
+    }
+</div>
+
+<div>
+    @if (Model.ToList().Count > 0)
+    {
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Orden de Trabajo</th>
+                        <th>Funciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model)
+                    {
+                        <tr>
+                            <td>@a.id</td>
+                            <td>@a.description</td>
+                            <td>@a.date.ToString("dd-MM-yyyy")</td>
+                            <td>@a.WorkOrder.description</td>
+                            <td>
+                                <a href="@Url.Action("AdvanceWorkUpdate", "AdvanceWork", new { id = a.id })">Actualizar</a>
+                                <a href="@Url.Action("AdvanceWorkDelete", "AdvanceWork", new { id = a.id })">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <label>No Hay Avances de Trabajo Registrados</label>
+    }
+</div>

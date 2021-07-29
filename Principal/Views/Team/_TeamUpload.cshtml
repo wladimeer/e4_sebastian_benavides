@@ -1,0 +1,14 @@
+﻿@model Principal.Models.Team
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="card">
+            @Html.HiddenFor(model => model.id)
+
+            <input type="file" id="photo" name="photo" />
+
+            <button type="submit" onclick="TeamUpload()">Cambiar</button>
+            <button type="button" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+    </div>
+</div>

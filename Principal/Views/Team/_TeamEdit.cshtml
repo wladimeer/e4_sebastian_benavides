@@ -1,0 +1,29 @@
+﻿@model Principal.Models.Team
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="card">
+            @Html.HiddenFor(model => model.id)
+            @Html.HiddenFor(model => model.url_image)
+            @Html.HiddenFor(model => model.reception)
+
+            <div>
+                <label>Descripción</label>
+                @Html.TextAreaFor(model => model.description, htmlAttributes: new { @class = "" })
+            </div>
+
+            <div>
+                <label>Problema</label>
+                @Html.TextAreaFor(model => model.problem, htmlAttributes: new { @class = "" })
+            </div>
+
+            <div>
+                <label>Cliente</label>
+                @Html.DropDownList("client_id", null, "Selecciona", htmlAttributes: new { @class = "" })
+            </div>
+
+            <button type="submit" onclick="TeamEdit()">Actualizar</button>
+            <button type="button" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+    </div>
+</div>

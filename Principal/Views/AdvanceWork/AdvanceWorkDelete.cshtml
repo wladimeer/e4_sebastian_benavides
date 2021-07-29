@@ -1,0 +1,23 @@
+﻿@model Principal.Models.AdvanceWorkOrder
+
+@{
+    ViewBag.Title = "Eliminar Avance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        <div>¿Seguro que deseas eliminar el avance @Model.id del equipo @Model.description?</div>
+    </div>
+
+    @using (Html.BeginForm("AdvanceWorkDelete", "AdvanceWork", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.work_order_id)
+
+        <button type="submit">Eliminar</button>
+        <a href="@Url.Action("AdvanceWorkList", "AdvanceWork", new { id = (int)Session["work_order_id"] })">Atrás</a>
+    }
+</div>

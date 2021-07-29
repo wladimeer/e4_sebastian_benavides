@@ -1,0 +1,57 @@
+﻿@model Principal.Models.WorkOrder
+
+@{
+    ViewBag.Title = "Actualizar Orden";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @using (Html.BeginForm("WorkOrderUpdate", "WorkOrder", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label>#</label>
+            <input readonly value="@Model.id" />
+            @Html.HiddenFor(model => model.id)
+        </div>
+
+        <div>
+            <label>Tipo</label>
+            @Html.TextBoxFor(model => model.type, htmlAttributes: new { @class = "", @type = "text" })
+            @Html.ValidationMessageFor(model => model.type, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Descripción</label>
+            @Html.TextAreaFor(model => model.description, htmlAttributes: new { @class = "" })
+            @Html.ValidationMessageFor(model => model.description, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Equipo</label>
+            @Html.DropDownList("team_id", null, "Selecciona", htmlAttributes: new { @class = "" })
+            @Html.ValidationMessageFor(model => model.team_id, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Usuario</label>
+            <input readonly value="@Model.User.name" />
+            @Html.HiddenFor(model => model.user_id)
+        </div>
+
+        <div>
+            <label>Fecha</label>
+            <input readonly value="@Model.date.ToString("dd-MM-yyyy")" />
+            @Html.HiddenFor(model => model.date)
+        </div>
+
+        <div>
+            <label>Estado</label>
+            @Html.CheckBox("state", Model.state)
+        </div>
+
+        <button type="submit">Actualizar</button>
+        <a href="@Url.Action("WorkOrderList", "WorkOrder")">Atrás</a>
+    }
+</div>

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/styles.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <header>
+        <h4>Management</h4>
+
+        @if (Session["user"] != null)
+        {
+            <a href="@Url.Action("SignOut", "Session")">Cerrar Sesión</a>
+        }
+
+        <ul>
+            <li><a href="@Url.Action("WorkOrderList", "WorkOrder")">Orden de Trabajo</a></li>
+            <li><a href="@Url.Action("TeamList", "Team")">Equipo</a></li>
+        </ul>
+    </header>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true"></div>
+
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/popper.min.js" type="module"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

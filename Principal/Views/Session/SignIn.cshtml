@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <div>
+        <form action="@Url.Content("~/Session/SignIn")" method="post">
+            @Html.AntiForgeryToken()
+
+            <div>
+                <label>Correo</label>
+
+                <div>
+                    <input type="email" name="email" value="@ViewBag.email" />
+                </div>
+            </div>
+
+            <div>
+                <label>Contraseña</label>
+
+                <div>
+                    <input type="password" name="password" value="@ViewBag.password" />
+                </div>
+            </div>
+
+            @if (TempData["error"] != null)
+            {
+                <div>
+                    <span>@TempData["error"]</span>
+                </div>
+            }
+
+            <button type="submit">Iniciar Sesión</button>
+            @ViewBag.type
+        </form>
+    </div>
+</body>
+</html>

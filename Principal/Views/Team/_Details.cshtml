@@ -1,0 +1,22 @@
+﻿@model Principal.Models.Team
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="card">
+            <img src="@Model.url_image" class="card-img-top" alt="Imagen Celular" />
+
+            <div class="card-body">
+                <h1 class="card-title">Detalles de Equipo</h1>
+
+                <div class="card-text">
+                    <b>Cliente</b> @Model.Client.name @Model.Client.lastnames
+                    <b>Recepción</b> @Model.reception.ToString("dd-MM-yyyy")
+                    <b>Descripción</b> @Model.description
+                    <b>Problema</b> @Model.problem
+                </div>
+
+                <button type="button" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

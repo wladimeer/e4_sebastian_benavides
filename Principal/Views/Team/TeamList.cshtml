@@ -1,0 +1,212 @@
+﻿@model IEnumerable<Principal.Models.Team>
+
+@{
+    ViewBag.Title = "Equipos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>Equipos</div>
+<a class="btn" onclick="OnNewTeam()">Nuevo Equipo</a>
+
+<div>
+    @if (TempData["success"] != null)
+    {
+        <span>@TempData["success"]</span>
+    }
+
+    @if (TempData["error"] != null)
+    {
+        <span>@TempData["error"]</span>
+    }
+</div>
+
+<div>
+    @if (Model.ToList().Count > 0)
+    {
+        <div>
+            @foreach (var t in Model)
+            {
+                <div>
+                    <img class="img-thumbnail" style="max-width: 200px; cursor: pointer;" src="@t.url_image" onclick="OnDetails(@t.id)" />
+
+                    <div>
+                        <a class="btn" onclick="OnTeamUpload(@t.id)">Imagen</a>
+                        <a class="btn" onclick="OnTeamEdit(@t.id)">Actualizar</a>
+                        <a class="btn" onclick="OnTeamDelete(@t.id)">Eliminar</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <label>No Hay Equipos de Trabajo Registrados</label>
+    }
+</div>
+
+<script type="text/javascript">
+    const OnNewTeam = () => {
+        $.get(`@Url.Action("NewTeam", "Team")`, (value) => {
+            $('#Modal').html(value);
+            $('#Modal').modal('show');
+        });
+    }
+
+    const OnDetails = (id) => {
+        $.get(`@Url.Action("Details", "Team")/${id}`, (value) => {
+            $('#Modal').html(value);
+            $('#Modal').modal('show');
+        });
+    }
+
+    const OnTeamEdit = (id) => {
+        $.get(`@Url.Action("TeamEdit", "Team")/${id}`, (value) => {
+            $('#Modal').html(value);
+            $('#Modal').modal('show');
+        });
+    }
+
+    const OnTeamDelete = (id) => {
+        $.get(`@Url.Action("TeamDelete", "Team")/${id}`, (value) => {
+            $('#Modal').html(value);
+            $('#Modal').modal('show');
+        });
+    }
+
+    const OnTeamUpload = (id) => {
+        $.get(`@Url.Action("TeamUpload", "Team")/${id}`, (value) => {
+            $('#Modal').html(value);
+            $('#Modal').modal('show');
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    const NewTeam = () => {
+        const problem = $('#problem');
+        const description = $('#description');
+        const client = $('#client_id');
+        let state = true;
+
+        if (problem.val().trim() == "") {
+            problem.addClass("border border-danger");
+            state = false;
+        } else {
+            problem.removeClass();
+        }
+
+        if (description.val().trim() == "") {
+            description.addClass("border border-danger");
+            state = false;
+        } else {
+            description.removeClass();
+        }
+
+        if (client.val().trim() == "") {
+            client.addClass("border border-danger");
+            state = false;
+        } else {
+            client.removeClass();
+        }
+
+        if (state) {
+            var team = {
+                "problem": problem.val().trim(),
+                "description": description.val().trim(),
+                "client_id": client.val().trim()
+            };
+
+            $.post("@Url.Action("NewTeam", "Team")/", team, (value) => {
+                if (value == 'success') {
+                    location = location.href;
+                }
+            });
+        }
+    }
+
+    const TeamEdit = () => {
+        const problem = $('#problem');
+        const description = $('#description');
+        const client = $('#client_id');
+        let state = true;
+
+        if (problem.val().trim() == "") {
+            problem.addClass("border border-danger");
+            state = false;
+        } else {
+            problem.removeClass();
+        }
+
+        if (description.val().trim() == "") {
+            description.addClass("border border-danger");
+            state = false;
+        } else {
+            description.removeClass();
+        }
+
+        if (client.val().trim() == "") {
+            client.addClass("border border-danger");
+            state = false;
+        } else {
+            client.removeClass();
+        }
+
+        if (state) {
+            var team = {
+                "id": $('#id').val(),
+                "problem": problem.val().trim(),
+                "description": description.val().trim(),
+                "url_image": $('#url_image').val(),
+                "reception": $('#reception').val(),
+                "client_id": client.val().trim()
+            };
+
+            $.post("@Url.Action("TeamEdit", "Team")/", team, (value) => {
+                if (value == 'success') {
+                    location = location.href;
+                }
+            });
+        }
+    }
+
+    const TeamDelete = () => {
+        var team = { "id": $('#id').val() };
+
+        $.post("@Url.Action("TeamDelete", "Team")/", team, (value) => {
+            if (value == 'success') {
+                location = location.href;
+            }
+        });
+    }
+
+    const TeamUpload = () => {
+        var temp = $('#photo');
+
+        if (temp[0].files.length == 0) {
+            temp.addClass("border border-danger");
+        } else {
+            const file = temp[0].files[0];
+            const formData = new FormData();
+            const id = $('#id').val();
+
+            formData.append('file', file);
+            formData.append('id', id);
+
+            $.ajax({
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                url: '@Url.Action("TeamUpload", "Team")',
+                success: function () {
+                    location = location.href
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            })
+
+            temp.removeClass();
+        }
+    }
+</script>

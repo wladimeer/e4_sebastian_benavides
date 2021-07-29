@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Operación no Autorizada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>No Tienes Los Permisos Necesarios</h1>
+</section>
+
+<section>
+    <div>
+        <h2>Error</h2>
+
+        <div>
+            <h3>Sin Autorización</h3>
+            @if (ViewBag.operation != "")
+            {
+                <p>Operación @ViewBag.operation </p>
+            }
+
+            @if (ViewBag.module != "")
+            {
+                <p>Modulo @ViewBag.module</p>
+            }
+
+            @if (ViewBag.message != "")
+            {
+                <p>@ViewBag.message</p>
+            }
+        </div>
+    </div>
+</section>
+

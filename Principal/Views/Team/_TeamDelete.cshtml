@@ -1,0 +1,14 @@
+﻿@model Principal.Models.Team
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="card">
+            @Html.HiddenFor(model => model.id)
+
+            <p>¿Seguro que Deseas Eliminar El Equipo @Model.id con el Problema @Model.problem?</p>
+
+            <button type="submit" onclick="TeamDelete()">Eliminar</button>
+            <button type="button" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+    </div>
+</div>

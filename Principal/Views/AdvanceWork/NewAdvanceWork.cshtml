@@ -1,0 +1,28 @@
+﻿@model Principal.Models.AdvanceWorkOrder
+
+@{
+    ViewBag.Title = "Nuevo Avance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @using (Html.BeginForm("NewAdvanceWork", "AdvanceWork", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label>Descripción</label>
+            @Html.TextAreaFor(model => model.description, htmlAttributes: new { @class = "" })
+            @Html.ValidationMessageFor(model => model.description, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Fecha</label>
+            @Html.TextBoxFor(model => model.date, htmlAttributes: new { @class = "", @type = "date" })
+            @Html.ValidationMessageFor(model => model.date, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <button type="submit">Agregar</button>
+        <a href="@Url.Action("AdvanceWorkList", "AdvanceWork", new { id = (int)Session["work_order_id"] })">Atrás</a>
+    }
+</div>

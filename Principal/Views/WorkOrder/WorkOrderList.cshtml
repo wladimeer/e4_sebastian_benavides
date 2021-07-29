@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Principal.Models.WorkOrder>
+
+@{
+    ViewBag.Title = "Ordenes de Trabajo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>Ordenes de Trabajo</div>
+<a href="@Url.Action("NewWorkOrder", "WorkOrder")">Nueva Orden de Trabajo</a>
+
+<div>
+    @if (TempData["success"] != null)
+    {
+        <span>@TempData["success"]</span>
+    }
+
+    @if (TempData["error"] != null)
+    {
+        <span>@TempData["error"]</span>
+    }
+</div>
+
+<div>
+    @if (Model.ToList().Count > 0)
+    {
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Equipo</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Funciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var o in Model)
+                    {
+                        <tr>
+                            <td>@o.id</td>
+                            <td>@o.type</td>
+                            <td>@o.description</td>
+                            <td>@o.Team.description</td>
+                            <td>@o.User.name</td>
+                            <td>@o.date.ToString("dd-MM-yyyy")</td>
+                            @if (o.state == true)
+                            {
+                                <td>Finalizado</td>
+                            }
+                            else
+                            {
+                                <td>Pendiente</td>
+                            }
+                            <td>
+                                <a href="@Url.Action("WorkOrderUpdate", "WorkOrder", new { id = o.id })">Actualizar</a>
+                                <a href="@Url.Action("WorkOrderDelete", "WorkOrder", new { id = o.id })">Eliminar</a>
+                                <a href="@Url.Action("AdvanceWorkList", "AdvanceWork", new { id = o.id })">Avances</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <label>No Hay Ordenes de Trabajo Registradas</label>
+    }
+</div>

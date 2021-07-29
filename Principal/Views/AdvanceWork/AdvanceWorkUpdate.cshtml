@@ -1,0 +1,40 @@
+﻿@model Principal.Models.AdvanceWorkOrder
+
+@{
+    ViewBag.Title = "Actualizar Avance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @using (Html.BeginForm("AdvanceWorkUpdate", "AdvanceWork", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label>#</label>
+            <input readonly value="@Model.id" />
+            @Html.HiddenFor(model => model.id)
+        </div>
+
+        <div>
+            <label>Descripción</label>
+            @Html.TextAreaFor(model => model.description, htmlAttributes: new { @class = "" })
+            @Html.ValidationMessageFor(model => model.description, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Fecha</label>
+            @Html.TextBoxFor(model => model.date, "{0:yyyy-MM-dd}", htmlAttributes: new { @class = "", @type = "date" })
+            @Html.ValidationMessageFor(model => model.date, "", htmlAttributes: new { @class = "" })
+        </div>
+
+        <div>
+            <label>Orden de Trabajo</label>
+            <input readonly value="@Model.WorkOrder.description" />
+            @Html.HiddenFor(model => model.work_order_id)
+        </div>
+
+        <button type="submit">Actualizar</button>
+        <a href="@Url.Action("AdvanceWorkList", "AdvanceWork", new { id = (int)Session["work_order_id"] })">Atrás</a>
+    }
+</div>
